@@ -1,0 +1,118 @@
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="updateBlog()">
+    <div class="main-div" style="margin: 0;">
+        <div class="row" style="margin: 0;">
+            <div class="col"></div>
+            <div class="col-6">
+                <div>
+                    <mat-card class="container">
+                        <div style="margin-top: 3%;">
+                            <p class="post-create">ВЫ ИЗМЕНЯЕТЕ РЕЦЕПТ: {{blogTitle}}</p>
+                        </div>
+                        <hr width="100%" />
+                        <div class="row title-category-div">
+                            <p class="headers-text" style="padding: 0;">Название блюда и категория блюда</p>
+
+                            <div class="col" style="padding-left: 0;">
+                                <div class="post-title-div">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Название блюда</mat-label>
+                                        <input matInput formControlName="title">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col" style="padding-right: 0;">
+                                <div class="category-div">
+                                    <mat-form-field appearance="fill">
+                                        <mat-select [(ngModel)]="blogCategory._id" formControlName="category">
+                                            <mat-option *ngFor="let category of (categorySource$ | async)"
+                                                [value]="category._id">{{category.catTitle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="post-image">
+                            <mat-label class="headers-text">Фото готового блюда</mat-label>
+                            <mat-card style="margin-top: 3%">
+                                <img class="post-image-img" *ngIf="form.get('headerImage').value"
+                                    src="http://localhost:3000/api/blogs/image/{{form.get('headerImage').value}}"
+                                    (click)="showFullImage(form.get('headerImage').value)">
+                                <mat-progress-bar *ngIf="file.progress" [value]="file.progress" style="margin-top: 3%;">
+                                </mat-progress-bar>
+                                <mat-card-actions>
+                                    <div class="d-flex justify-content-center">
+                                        <button mat-button type="button" (click)="updateImage()" class="update-button">
+                                            <mat-icon style="color: rgb(25, 199, 25);">cloud_upload</mat-icon> Обновить
+                                            фотографию
+                                        </button>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+                            <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*"
+                                style="display:none;">
+                        </div>
+                        
+                        <hr width="80%" />
+
+                        <div class="post-description">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="headers-text">Описание блюда</mat-label>
+                                    <textarea class="post-textarea" matInput formControlName="description">
+                                    </textarea>
+                                    <mat-hint>
+                                        Обязательно напишите 2-3 строки - что это за блюдо, его особенности, вкусовые
+                                        качества.
+                                        Этот текст будет показываться в качестве анонса к Вашему рецепту - и именно по
+                                        этому тексту люди будут определять, стоит читать Ваш рецепт - или нет.
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <hr width="80%" />
+
+                        <div class="row" style="width: 100%; margin-top: 2%;">
+                            <div class="col">
+                                <div class="col-4"></div>
+                                <p class="headers-text">Количество порций</p>
+                                <div class="col-2">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="number" class="servings" formControlName="servings">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="col row">
+                                <p class="headers-text">Время приготовления</p>
+
+                                <!-- <div class="col-4" style="background-color: blue;">1</div> -->
+                                <div class="col-3">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="number" class="servings" formControlName="timeForCooking">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col container">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col" style=" width: 100%;">
+                                        <p class="text-left">минут</p>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr width="80%" />
+                        
+                        <button mat-flat-button color="primary" class="addToModerateButton" [disabled]="form.invalid"
+                            type="submit" (click)="updateBlog()">Обновить рецепт</button>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+</form>

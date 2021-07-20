@@ -1,0 +1,95 @@
+<app-welcome-message *ngIf="isJoined === false"></app-welcome-message>
+<div class="row row-cols-5 search d-flex justify-content-center align-items-center">
+  <div class="col what-to-cook">
+    <p>
+      Что хотите приготовить?
+    </p>
+  </div>
+  <div class="col">
+    <mat-form-field class="example-form-field">
+      <mat-label>Название блюда</mat-label>
+      <input matInput type="text" [(ngModel)]="value">
+      <button mat-button *ngIf="value" matSuffix mat-icon-button (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <!-- <input type="text" placeholder="Любое блюдо, ингридиент или категория"> -->
+  </div>
+  <div class="col">
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите категорию</mat-label>
+      <mat-select>
+        <mat-option>Любая категория</mat-option>
+        <mat-option *ngFor="let category of (categorySource$ | async)" [value]="category.catTitle">{{category.catTitle}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field>
+            <mat-select placeholder="Select Level of Education" name="education_level" (selectionChange)="educationLevelChangeAction(education_level)" [(ngModel)]="education_level" >
+              <mat-option *ngFor="let education of educationList" [value]="education" >{{ education.educationLevelName }}</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+
+  </div>
+  <div class="col expansion-panel">
+    <button mat-stroked-button (click)="openDialog()" class="ingredients-button">Ингредиенты</button>
+  </div>
+  <div class="col">
+    <button mat-raised-button class="find-button">Подобрать рецепты</button>
+  </div>
+</div>
+<div class="container">
+  <h2>Новые рецепты от наших пользователей</h2>
+  <div *ngIf="blogEntries?.docs">
+    <div class="row row-cols-4">
+      <div class="col" *ngFor="let blog of blogEntries?.docs; let i = index">
+        <mat-card class="card">
+          <div (click)="navigate(blog._id)">
+            <img class="blog-image" *ngIf="blog.headerImage; else placeholderBlogImage"
+              src="http://localhost:3000/api/blogs/image/{{blog.headerImage}}">
+            <ng-template #placeholderBlogImage>
+              <img src="../../../assets/placeholders/placeholder-blog-entry.jpg" class="blog-image">
+            </ng-template>
+            <div class="col">
+              <small>{{blog.timeForCooking}} минут</small>
+              <h2 class="crop-text" style="margin: 0;">
+                {{blog.title}}
+              </h2>
+              <p class="crop-text-2">{{blog.description}}</p>
+              <ng-template #placeholderImage>
+                <img src="../../../assets/placeholders/placeholder-blog-entry.jpg" class="user-image">
+              </ng-template>
+    
+            </div>
+          </div>
+          <div class="author row">
+            <div class="col-4" >
+              <img *ngIf="blog.authorId.profileImage; else placeholderImage" src="http://localhost:3000/api/user/profile-image/{{blog.authorId.profileImage}}" class="user-image">
+            </div>
+            <div class="col" >
+              <mat-card-subtitle style="margin-top:5px; margin-bottom: 5px;">{{blog.authorId.name}}</mat-card-subtitle>
+              <mat-card-subtitle>{{blog.createdAt | date}}</mat-card-subtitle>
+            </div>
+          </div>
+          <div class="bookmark-icon" *ngIf="isJoined === true">
+            <mat-icon color="accent" matTooltip="Добавить рецепт в избранное" style="cursor: pointer;" type="button" (click)="addPostToFavorites(post)" class="bookmark-icon" >bookmark</mat-icon> 
+          </div>
+  
+        </mat-card>
+  
+      
+      </div>
+  
+      
+  
+    
+    </div>
+    <mat-paginator *ngIf="blogEntries?.docs" [length]="blogEntries?.totalDocs" [pageSize]="blogEntries?.limit"
+    [pageSizeOptions]="[5, 10, 50, 100]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons>
+  
+  </mat-paginator>
+  
+  </div>
+</div>
+

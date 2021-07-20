@@ -1,0 +1,115 @@
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col">
+            <div *ngIf="(blogDto$ | async) as post" class="main-div">
+                <mat-card class="card">
+                    <button  mat-icon-button [matMenuTriggerFor]="menu" type="button" aria-label="Users menu" class="users-menu">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item >
+                          <mat-icon>flag</mat-icon>
+                          <span>Пожаловаться</span>
+                        </button>
+                      </mat-menu>
+                    <mat-card-header>
+                        <div class="col">
+                            <div class="post-category-div">
+                                <p class="text-center">
+                                    &#9900; {{post.category.catTitle}} &#9900;
+                                </p>
+                            </div>
+                            <div>
+                                <h1 class="text-center" style="text-transform: uppercase; margin-top: 3%; margin-bottom: 0;">
+                                    {{post.title}}
+                                </h1>
+
+                            </div>
+                        </div>
+                    </mat-card-header>
+                    <hr  width="100%"/>
+                    <mat-card-content>
+                        <div class="row" >
+                            <div class="col" >
+                                <img src="http://localhost:3000/api/blogs/image/{{post.headerImage}}" (click)="showFullImage(post.headerImage)" class="header-image">
+                                <div class="ingredients" style="margin-top: 3%;">
+                                    <h2>Ингредиенты</h2>
+                                    <div *ngFor="let ing of post.ingredients; let y = index" class="row">
+                                        <div class="col-3">
+                                             {{y+1}}
+                                            {{ing.ingredient.ingTitleRu}}</div>
+                                        <div class="col">
+                                            <hr />
+                                        </div>
+                                        <div class="col-2">
+                                            {{ing.quantity}}
+                                            {{ing.measure}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: 20px;" class="col">
+                                <div class="avatar-image" (click)="navigateToProfile(post.authorId._id)" >
+                                    <img *ngIf="post.authorId.profileImage; else placeholderImage" src="http://localhost:3000/api/user/profile-image/{{post.authorId.profileImage}}" class="user-image">
+                                    <h3> {{post.authorId.name}}</h3>
+                                </div>
+                                <ng-template #placeholderImage>
+                                    <img src="../../../assets/placeholders/placeholder-blog-entry.jpg" class="user-image">
+                                </ng-template>
+                                <hr  width="100%"/>
+                                <div class="row" >
+                                    <!-- <div class="col-3"></div> -->
+                                    <div class="col" matTooltip="Количество ингридиентов">
+                                        <img src="https://img.icons8.com/material-outlined/25/000000/shopping-cart-loaded.png"/>
+                                    </div>
+                                    <div class="col" matTooltip="Количество порций">
+                                        <img src="https://img.icons8.com/material-outlined/24/000000/salad-bowl.png"/>
+                                        {{post.servings}}   
+                                    </div>
+                                    <div class="col timer-icon-text" matTooltip="Время приготовления">
+                                        <mat-icon mat-list-icon>timer 
+                                        </mat-icon>
+                                        {{post.timeForCooking}} минут  
+                                    </div>
+                                    <!-- <div class="col-2"></div> -->
+                                </div>
+                                <div >
+                                    <mat-card>
+                                        Энергетическая ценность
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <hr />
+                    <div class="steps">
+                        <h2>Пошаговая инструкция</h2>
+                        <div  *ngFor="let step of post.steps; let i = index" >
+                            <b style="margin-right: 2%;"> 
+                                {{i+1}}.
+                            </b>
+                            <div class="step-div">
+                                 {{step.step}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tags" style="margin-top: 3%;">
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip
+                            *ngFor="let tag of post.tags">{{tag}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="date">
+                        {{post.createdAt | date}}
+                    </div>
+                    <mat-card-actions *ngIf="isJoined === true">
+                        <hr/>
+                            <mat-icon color="accent" matTooltip="Добавить рецепт в избранное" style="cursor: pointer;" (click)="addPostToFavorites(post)" >bookmark</mat-icon> 
+                      </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>

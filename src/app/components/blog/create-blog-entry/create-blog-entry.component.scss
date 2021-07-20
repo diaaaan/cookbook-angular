@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+
+mat-form-field{
+    width: 100%;
+    margin-top: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgb(25, 199, 25) !important;
+ }
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: rgb(25, 199, 25) !important;
+}
+
+/* Border */
+::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgb(25, 199, 25) !important;
+}
+
+.post-servings {
+  width: 50px;
+  padding: 0;
+  margin: 0;
+}
+// .mat-form-field-appearance-outline .mat-form-field-outline-thick { color: rgb(25, 199, 25) !important; }
+.main-div {
+  background-color: #f7f7f7;
+  height: auto;
+}
+
+.post-image {
+  width: 100%;
+  margin-bottom: 3%;
+} 
+
+.post-image-img {
+  border: none;
+  width: 100%;
+}
+
+.addToModerateButton{
+  font-size: 120%;
+  margin-top: 1%;
+  background-color: rgb(25, 199, 25);
+  color: white;
+}
+
+.add-image {
+  color: rgb(25, 199, 25);
+}
+
+.add-step-image-button{
+  color: rgb(25, 199, 25);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+
+.mat-card-step{
+  margin: 0;
+  padding: 0;
+  height: 120px;
+}
+
+.add-step-textarea {
+  height: 100px; /* Высота поля в пикселах */
+  resize: none;
+  outline: dimgrey;
+  font-size: 20px;
+  padding: 0 !important;
+}
+
+.post-title-div {
+  width: 100%;
+}
+
+.servings {
+  font-size: 20px;
+  padding: 0 !important;
+}
+
+.servings-div {
+  width: 50px;
+}
+
+.measure-div{
+  width: 60%;
+  margin-left: 2%;
+}
+
+.deleteItemIng {
+  bottom: 30px;
+  left: 13px
+  // right: 10px; 
+  // top: 15px;
+}
+
+.post-title {
+  font-family: Roboto, sans-serif;
+  flex: 1 1 0%;
+  padding: 17px 15px;
+  border-radius: 3px;
+  position: relative;
+  max-width: 100%;
+  min-width: 100%;
+  width: 100%;
+  min-height: unset;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 50px;
+  color: #585857;
+  text-align: center;
+  border: none;
+  resize: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.post-title:placeholder-shown {
+  color: aquamarine;
+}
+
+p {
+  font-size: 120%;
+}
+
+.step-image{
+  background-color: darkgray;
+}
+
+.post-create {
+  // font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Orelega One', cursive;
+  font-size: 170%;
+}
+
+.headers-text {
+  font-family: 'Orelega One', cursive;
+  font-size: 120%;
+  margin: 0;
+}
+
+.title-category-div {
+  width: 100%;
+  margin-top: 3%;
+}
+
+.post-textarea {
+  height: 100px; /* Высота поля в пикселах */
+  resize: none;
+  outline: dimgrey;
+}
+
+.category-div {
+  margin-top: 2px;
+  width: 100%;
+}
+
+.post-description{
+  width: 100%;
+  margin-bottom: 3%;
+}
+
+h1 {
+  font-family: 'Orelega One', cursive;
+  font-size: 260%; /* Размер шрифта в процентах */ 
+} 
+
+* {
+  font-family: 'Noto Sans TC', sans-serif;
+  // font-family: 'Nunito', sans-serif;
+}
+
+.add-button {
+  background-color: white;
+  color: black;
+  border: 2px solid rgb(25, 199, 25);
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-direction: center;
+}
+
+.variable-textarea {
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.07);
+    min-height: 420px;
+    padding: 8px;
+    transition: all 300ms ease-out;
+  }
+  
+  .variable-textarea:hover {
+    box-shadow: 0 6px 12px 3px rgba(0,0,0,.09),
+      0 2px 3px 1px rgba(0,0,0,.06);
+  }
+  
+  .variable-binding {
+    display: block;
+    float: right;
+  }
+  
+  .example-chip-list {
+    width: 100%;
+  }
+  

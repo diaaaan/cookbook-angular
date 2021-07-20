@@ -1,0 +1,57 @@
+<!-- <div *ngIf="blogEntriesLength > 0; else placeholderNullPosts"> -->
+<div style="margin-top: 3%;">
+    <mat-card>
+        В этом разделе собраны все созданные вами рецепты, которые прошли модерацию. Другие пользователи могут видеть их.
+    </mat-card>
+    <mat-card *ngFor="let blog of blogEntries" class="card">
+        <div>
+            <button mat-icon-button [matMenuTriggerFor]="menu" type="button" aria-label="Users menu" class="users-menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="navigateToUpdate(blog._id)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Редактировать рецепт</span>
+                </button>
+                <button mat-menu-item (click)="openDeleteDialog(blog)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span class="delete-button">Удалить рецепт</span>
+                </button>
+            </mat-menu>
+            <div style="display: flex;" (click)="navigate(blog._id)">
+                <div>
+                    <img *ngIf="blog.headerImage; else placeholderImage"
+                        src="http://localhost:3000/api/blogs/image/{{blog.headerImage}}">
+                </div>
+                <ng-template #placeholderImage>
+                    <img src="../../../assets/placeholders/placeholder-blog-entry.jpg">
+                </ng-template>
+                <div style="margin-left: 30px;">
+                    <h2>
+                        {{blog.title}}
+                    </h2>
+                    <h4 class="crop-text-2 ">{{blog.description}}</h4>
+                    <small>Категория:</small>
+                    <h4>{{blog.category.catTitle}}</h4>
+
+                </div>
+            </div>
+            <!-- <hr />
+            <mat-card-actions style="margin-left: 1%;">
+                <mat-chip-list aria-label="Fish selection">
+                    <mat-chip *ngFor="let tag of blog.tags">{{tag}}</mat-chip>
+                </mat-chip-list>
+            </mat-card-actions> -->
+        </div>
+    </mat-card>
+    <!-- </div> -->
+    <!-- 
+    <ng-template #placeholderNullPosts>
+        <div class="placeholderNullPosts">
+            <h1>
+                У вас еще нет созданных рецептов
+            </h1>
+            <img src="../../../assets/placeholders/placeholder-emptyposts-girl.jpg" class="placeholderNullPosts-image">
+        </div>
+    </ng-template> -->
+</div>

@@ -1,0 +1,271 @@
+<div class="main-div" style="margin: 0;">
+    <div class="row" style="margin: 0;">
+        <div class="col" ></div>
+        <div class="col-6" >                 
+            <form [formGroup]="form">
+                <div>
+                    <mat-card class="container">
+                        <div style="margin-top: 3%;"> <p class="post-create">ВЫ СОЗДАЕТЕ НОВЫЙ РЕЦЕПТ:</p> </div>
+                        <hr  width="100%"/>
+                        <div class="row title-category-div">
+                            <p class="headers-text" style="padding: 0;">Название блюда и категория блюда</p>
+
+                            <div class="col" style="padding-left: 0;">
+                                <div class="post-title-div">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Название блюда</mat-label>
+                                        <input matInput formControlName="title">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col" style="padding-right: 0;">
+                                <div class="category-div">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Выберите категорию блюда</mat-label>
+                                        <mat-select formControlName="category" >
+                                        <mat-option  *ngFor="let category of (categorySource$ | async)" [value]="category._id">{{category.catTitle}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                  
+
+                      
+
+                        <div class="post-image">
+                            <mat-label class="headers-text">Фото готового блюда</mat-label>
+                            <mat-card style="margin-top: 3%">
+                                <mat-card-content>
+                                    <img class="post-image-img" *ngIf="form.get('headerImage').value" src="http://localhost:3000/api/blogs/image/{{form.get('headerImage').value}}">
+                                    <div class="img-wrap" *ngIf="form.get('headerImage').value">
+                                        <button id="clear" class="hide" (click)="deleteImage()">х</button>
+                                    </div> 
+                                    <mat-card-actions *ngIf="!form.get('headerImage').value">
+                                        <div class="row">
+                                            <div class="col"></div>
+                                            <div class="col">
+                                                <button class="add-image" mat-button type="button" (click)="onClick()">
+                                                    <mat-icon>cloud_upload</mat-icon>
+                                                    <p >Добавить фотографию</p>
+                                                </button>
+                                            </div>
+                                            <div class="col"></div>
+                                        </div>
+                                     
+                                        <mat-progress-bar [value]="file.progress">
+                                        </mat-progress-bar>
+                                    </mat-card-actions>
+                                    
+                                </mat-card-content>
+                            </mat-card>
+                            <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display: none;">
+                        </div>
+                        <hr  width="80%"/>
+
+                        <div class="post-description">
+                            <div class="col">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="headers-text">Описание блюда</mat-label>
+                                    <textarea class="post-textarea" matInput  formControlName="description">
+                                    </textarea>
+                                    <mat-hint>
+                                        Обязательно напишите 2-3 строки - что это за блюдо, его особенности, вкусовые качества.
+                                        Этот текст будет показываться в качестве анонса к Вашему рецепту - и именно по этому тексту люди будут определять, стоит читать Ваш рецепт - или нет.
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>     
+                        </div>
+
+                        <hr  width="80%"/>
+
+                        <div class="row" style="width: 100%; margin-top: 2%;">
+                       
+
+                            <div class="col" >
+                                <div class="col-4"></div>
+                                <p class="headers-text">Количество порций</p>
+                                    <div class="col-2" > 
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" class="servings" formControlName="servings">
+                                        </mat-form-field>
+                                    </div>
+                                <div class="col-4"></div>
+
+                            </div>
+                            <div class="col row">
+                                <p class="headers-text">Время приготовления</p>
+
+                                <!-- <div class="col-4" style="background-color: blue;">1</div> -->
+                                <div class="col-3">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="number"  class="servings" formControlName="timeForCooking"> 
+                                    </mat-form-field> 
+                                </div>
+                                    <div class="col container">
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                        <div class="col" style=" width: 100%;">
+                                            <p class="text-left">мин.</p>
+                                        </div>
+                                        <div class="col-3"></div>
+
+                                    </div>
+                            </div>
+                        </div>  
+                        <hr  width="80%"/>
+                        
+
+                        <div  style="width: 100%;">
+                            <p class="headers-text" style="margin-bottom: 2%; margin-top: 1%;">Ингредиенты</p>
+                                    <div formArrayName="ingredients" style="width: 100%;">
+                                        <div  class="row row-cols-2" [formGroupName]="i" *ngFor="let customerGroup of form.get('ingredients')['controls']; let i = index">
+                                            <div class="col">
+                                                <mat-label>Ингредиент {{i + 1}}</mat-label>
+                                            </div>
+                                            <div class="col">
+                                                <mat-label>Количество</mat-label>
+                                            </div>
+                                            <div class="col">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Выберите ингредиент</mat-label>
+                                                    <mat-select formControlName="ingredient">
+                                                    <mat-option>-</mat-option>
+                                                    <mat-option  *ngFor="let ingredient of (ingredientSource$ | async)" [value]="ingredient._id">{{ingredient.ingTitleRu}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col quantity-measure">
+                                                <mat-form-field appearance="outline" class="servings-div">
+                                                    <input matInput type="number" formControlName="quantity" class="servings">
+                                                </mat-form-field>
+                                                <mat-form-field appearance="fill" class="measure-div">
+                                                    <mat-label>Ед. изм</mat-label>
+                                                    <mat-select formControlName="measure">
+                                                    <mat-option>-</mat-option>
+                                                    <mat-option *ngFor="let measure of measures" [value]="measure.value">
+                                                        {{measure.value}}
+                                                      </mat-option>
+                                                    <!-- <mat-option  *ngFor="let measure of (measureSource$ | async)" [value]="measure.measurementRu">{{measure.measurementRu}}</mat-option> -->
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <button type="button" *ngIf="i >= 1" class="deleteItemIng" mat-flat-button (click)="deleteItemIng(i)">&#10006;</button>
+                                            </div>
+                                        <div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button"  class="add-button" mat-raised-button (click)="addItemIng()">Добавить ингредиент</button>
+                        </div>
+                        <hr  width="80%"/>
+                       
+              
+                    
+
+                        <div  style="width: 100%;">
+                            <p class="headers-text" style="margin-bottom: 2%;">Пошаговая инструкция</p>
+                            
+                                    <div formArrayName="steps" style="width: 100%;">
+                                        <div class="row" style="margin-top: 3%;" [formGroupName]="y" *ngFor="let customerGroup of form.get('steps')['controls']; let y = index">
+                                                <mat-label>Шаг {{y + 1}}</mat-label>
+                                                <div class="col-3" >
+                                                    <div class="step-image" >
+                                                        <mat-card style="margin-top: 3%">
+                                                            <mat-card-content>
+                                                                <img class="post-image-img" *ngIf="form.get('headerImage').value" src="http://localhost:3000/api/blogs/image/{{form.get('headerImage').value}}">
+                                                                <div class="img-wrap" *ngIf="form.get('headerImage').value">
+                                                                    <button id="clear"  class="hide" (click)="deleteImage()">х</button>
+                                                                </div> 
+                                                                <mat-card-actions *ngIf="!form.get('headerImage').value" class="mat-card-step">
+                                                                            <button class="add-step-image-button" mat-button type="button" (click)="stepImageUpload()">
+                                                                                <mat-icon>cloud_upload</mat-icon>
+                                                                                <p>Добавить <br/> 
+                                                                                    фотографию  </p>
+                                                                            </button>
+                                                                </mat-card-actions>
+                                                                
+                                                            </mat-card-content>
+                                                        </mat-card>
+                                                        <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display: none;">
+                                                    </div>
+                                                    <!-- <mat-form-field appearance="fill">
+                                                        <mat-label>Тут будет фотография</mat-label>
+                                                        <input matInput type="number" formControlName="stepPhoto" class="servings">
+    
+                                                        <mat-select formControlName="stepPhoto">
+                                                        <mat-option>-</mat-option>
+                                                        </mat-select> 
+                                                    </mat-form-field> -->
+                                                </div>
+                                                <div class="col row">
+                                                    <div class="col">
+                                                        <mat-form-field appearance="outline" >
+                                                            <mat-label>Описание шага {{y + 1}} </mat-label>
+                                                            <textarea matInput type="text" formControlName="step" class="add-step-textarea"> </textarea> 
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <button type="button" *ngIf="y >= 1" mat-flat-button (click)="deleteItemStep(y)">&#10006;</button>
+                                                    </div>
+                                                    
+                                           
+                                                </div>
+                                         
+                                           
+                                </div>
+                            </div>
+                            <button type="button" class="add-button" style="margin-top: 3%;" mat-raised-button (click)="addItem()">Добавить шаг</button>
+                        </div>
+
+                            <hr  width="80%"/>
+
+
+                            <mat-form-field class="example-chip-list">
+                                <mat-label class="headers-text">Тэги:</mat-label>
+                                <mat-chip-list #chipList aria-label="Fruit selection">
+                                <mat-chip
+                                    *ngFor="let tag of tags"
+                                    [selectable]="selectable"
+                                    [removable]="removable"
+                                    (removed)="remove(tag)">
+                                    {{tag}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input
+                                    matInput
+                                    formControlName="tags"
+                                    placeholder="Добавьте тэги"
+                                    #tagInput
+                                    [formControl]="tagsArr"
+                                    [matAutocomplete]="auto"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="add($event)">
+                                </mat-chip-list>
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let tag of (tagsSource$ | async)" [value]="tag.tagName">
+                                    {{tag.tagName}}
+                                </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            
+                        
+
+
+                        <!-- <div>
+                            <app-recipe-step *ngFor="let title of list" [title]="title" status="true"></app-recipe-step>
+                            <button StepDirective>Add a task</button>
+                        </div> -->
+
+                        <button mat-flat-button color="primary" class="addToModerateButton" [disabled]="form.invalid" type="submit" (click)="post()">Отправить на модерацию</button>
+
+                    </mat-card>
+                </div>
+
+            </form>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+</div>
+

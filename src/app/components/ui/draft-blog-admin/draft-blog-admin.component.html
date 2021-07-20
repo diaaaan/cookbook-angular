@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Вы отклоняете рецепт {{draftBlogName |lowercase}}</h1>
+<div mat-dialog-content>
+    Если у вас есть комментарии, напишите их в данную форму
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close cdkFocusInitial>Отменить</button>
+  <!-- <button mat-button mat-dialog>Продолжить</button> -->
+  <button mat-stroked-button color="warn" [mat-dialog-close]="true" (click)="draftBlog()">Отклонить</button>
+</div>

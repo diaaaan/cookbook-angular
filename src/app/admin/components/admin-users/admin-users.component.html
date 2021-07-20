@@ -1,0 +1,59 @@
+<div class="container">
+    <mat-form-field>
+        <mat-label>Введите имя пользователя</mat-label>
+        <input matInput type="text" [(ngModel)]="filterValue"
+        (input)="findByName(filterValue)" placeholder="Введите имя пользователя">
+    </mat-form-field>
+
+    <div *ngIf="dataSource">
+        <div>
+            <mat-table [dataSource]="dataSource.docs">
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns" (click)="navigateToProfile(row._id)"></mat-row>
+    
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row._id}}</mat-cell>
+                    </ng-container>
+    
+                    
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Имя</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+                    </ng-container>
+    
+                    
+                    <ng-container matColumnDef="nickname">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Никнейм</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.nickname}}</mat-cell>
+                    </ng-container>
+    
+                    
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
+                    </ng-container>
+    
+                    
+                    <ng-container matColumnDef="role">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Роль</mat-header-cell>
+                        <mat-cell [ngClass]="row.role == 'user' ? 'make-user' : 'make-admin'" *matCellDef="let row">
+                            {{row.role}}
+                        </mat-cell>
+                    </ng-container>
+    
+            </mat-table>
+        </div>
+
+
+        <mat-paginator class="paginator-footer" 
+                    [length]="dataSource.totalDocs"
+                    [pageSize]="dataSource.limit"
+                    [pageSizeOptions]="[5, 10, 50, 100]"
+                    (page)="pageEvent = $event; onPaginateChange($event)"
+                    showFirstLastButtons>
+        </mat-paginator>
+
+    </div>
+
+</div>

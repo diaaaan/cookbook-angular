@@ -1,0 +1,36 @@
+.make-user {
+    color: rgb(25, 199, 25);
+}
+
+
+.make-admin {
+    color: #ea4c89;
+}
+
+// .paginator-footer {
+//   position: fixed; /* Фиксированное положение */
+//   left: 0; bottom: 0; /* Левый нижний угол */
+//   width: 100%; /* Ширина слоя */
+// }
+
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+  
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #ea4c89 !important;
+   }
+  
+  ::ng-deep.mat-form-field-ripple {
+   /*change color of underline when focused*/
+   background-color: #ea4c89 !important;
+  }
+  
+  /* Border */
+  ::ng-deep.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #ea4c89 !important;
+  }
+  

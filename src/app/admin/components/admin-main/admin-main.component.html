@@ -1,0 +1,132 @@
+<div class="container main-div">
+   <div class="col">
+        <div class="row row-div">
+            <div class="col" *ngIf="postSource">
+                <mat-card>
+                    <div class="row" style="margin: 10% 5% 5% 5%;">
+                        <div class="col">
+                            <h1>{{postSource.totalDocs}}</h1>
+                            <p>Всего постов</p>
+                        </div>
+                        <div class="col-2">
+                            <mat-icon>home</mat-icon>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col">
+                <mat-card>
+                    <div class="row" style="margin: 10% 5% 5% 5%;">
+                        <div class="col">
+                            <h1>50</h1>
+                            <p>text</p>
+                        </div>
+                        <div class="col-2">
+                            <mat-icon>home</mat-icon>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col">
+                <mat-card>
+                    <div class="row"  *ngIf="dataSource" style="margin: 10% 5% 5% 5%;">
+                        <div class="col">
+                            <h1>{{dataSource.totalDocs}}</h1>
+                            <p>Пользователей</p>
+                        </div>
+                        <div class="col-2">
+                            <mat-icon>home</mat-icon>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <div class="col">
+                <mat-card>
+                    <div class="row" style="margin: 10% 5% 5% 5%;">
+                        <div class="col">
+                            <h1>50</h1>
+                            <p>text</p>
+                        </div>
+                        <div class="col-2">
+                            <mat-icon>home</mat-icon>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+   </div>
+   <div class="col" style="margin-top: 5%;">
+        <div class="row">
+            <div class="col">
+                <mat-card>
+                    <mat-card-header class="card-container">
+                        <mat-card-title>Последние рецепты для модерации</mat-card-title>
+                        <button class="see-more-button" mat-raised-button (click)="navigateTo('moderation')">
+                            <span>Посмотреть все</span>
+                            <mat-icon mat-list-icon>arrow_forward</mat-icon>
+                        </button>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div *ngIf="postSource">
+                            <mat-table [dataSource]="postSource.docs">
+                                <mat-header-row *matHeaderRowDef="displayedColumnsPosts"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumnsPosts"></mat-row>
+
+                                    <ng-container matColumnDef="title">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Название</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.title}}</mat-cell>
+                                    </ng-container>
+
+                                    
+                                    <ng-container matColumnDef="category">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Категория</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.category.catTitle}}</mat-cell>
+                                    </ng-container>
+                        
+                                    
+                                    <ng-container matColumnDef="isRecipieAccepted">
+                                        <mat-header-cell   *matHeaderCellDef mat-sort-header>Статус</mat-header-cell>
+                                        <mat-cell   *matCellDef="let row"> <div [ngClass]="row.isRecipieAccepted ? 'accepted' : 'rejected'"></div> </mat-cell>
+                                    </ng-container>
+                        
+                            </mat-table>
+                        
+                        </div>
+                      </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="col-4">
+                <mat-card>
+                    <mat-card-header class="card-container">
+                        <mat-card-title>Пользователи</mat-card-title>
+                        <button class="see-more-button" mat-raised-button type="button" (click)="navigateTo('users')">
+                            <span>Посмотреть все</span>
+                            <mat-icon mat-list-icon>arrow_forward</mat-icon>
+                        </button>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div *ngIf="dataSource">
+                            <mat-table [dataSource]="dataSource.docs">
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                                    <ng-container matColumnDef="nickname">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header>Никнейм</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">{{row.nickname}}</mat-cell>
+                                    </ng-container>
+                        
+                                    
+                                    <ng-container matColumnDef="role">
+                                        <mat-header-cell   *matHeaderCellDef mat-sort-header>Роль</mat-header-cell>
+                                        <mat-cell  [ngClass]="row.role == 'user' ? 'make-user' : 'make-admin'" *matCellDef="let row">{{row.role}}</mat-cell>
+                                    </ng-container>
+                        
+                            </mat-table>
+                        
+                        </div>
+                      </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+   </div>
+</div>

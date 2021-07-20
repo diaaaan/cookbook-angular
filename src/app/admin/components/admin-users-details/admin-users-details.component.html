@@ -1,0 +1,129 @@
+<div class="container">
+    <div *ngIf="(user$ | async) as user" class="row" style="padding-left: 2%; padding-right: 2%; margin: 0;">
+        <div class="col-4">
+            <mat-card class="avatar-image">
+                <img *ngIf="user.profileImage; else placeholderImage" src="http://localhost:3000/api/user/profile-image/{{user.profileImage}}" (click)="showFullImage(user.profileImage)" class="user-image">
+            </mat-card>
+            <ng-template #placeholderImage>
+                <img src="../../../assets/placeholders/placeholder-blog-entry.jpg" class="user-image">
+            </ng-template>
+        </div>
+        <div class="col">
+            <mat-card class="user-info">
+                <div class="row">
+                    <div class="col">
+                        <small>Имя пользователя:</small>
+                        <h1>{{user.name}}</h1>
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col d-flex align-items-center"> 
+                        
+                        <button class="block-user-button">  
+                            Заблокировать пользователя
+                        </button>
+                    </div>
+                    
+                    <hr/>
+                    <small>Описание:</small>
+                    <h3> <p style="text-indent: 20px;">
+                            {{user.userDescription}}
+                        </p>
+                    </h3>
+                    <hr/>
+
+                </div> 
+                    <div class="row">
+                        <div class="col-2">
+                            <small>Роль:</small>
+                            <h3 [ngClass]="user.role == 'user' ? 'make-user' : 'make-admin'"> 
+                                {{user.role}}
+                            </h3>
+                            <a href="" *ngIf="user.role == 'user'; else placeholderRole">Назначить админом</a>
+                            <ng-template #placeholderRole>
+                                <a href="">Понизить роль до user</a>
+                            </ng-template>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                        <div class="col"></div>
+                       
+                    </div>
+            </mat-card>
+            <div>
+              
+            </div>
+        </div>
+        
+        <mat-accordion style="margin-top: 3%;">
+            <mat-expansion-panel (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Рецепты пользователя
+                </mat-panel-title>
+                <mat-panel-description>
+                    {{panelOpenState ? 'Скрыть рецепты пользователя' : 'Показать рецепты пользователя'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+                    <!-- <div *ngIf="blogEntriesLength > 0; else placeholderNullPosts"> -->
+                        <div class="container">
+                                <div class="row row-cols-4">
+                                    <mat-card *ngFor="let blog of (blogEntries$ | async)"  class="col card">
+                                      
+                                        <div class="row" (click)="navigateToDetails(blog._id)">
+                                            <div class="col">
+                                                <img class="image-img" *ngIf="blog.headerImage; else placeholderImage" src="http://localhost:3000/api/blogs/image/{{blog.headerImage}}">
+                                                <ng-template #placeholderImage>
+                                                    <img src="../../../assets/placeholders/placeholder-blog-entry.jpg">
+                                                </ng-template>
+                                            </div>
+                                            <div class="col">
+                                                    <h2>
+                                                        {{blog.title}}
+                                                    </h2>
+                                                    <small>Категория:</small>
+                                                    <p>{{blog.category.catTitle}}</p>
+                                                   
+                                                  
+                                    
+                                            </div>
+                                        
+                                       
+                                        </div>
+                                        <mat-card-actions>
+                                            <div style="margin-left: 4%;">
+                                                Тэги:
+                                            </div>
+                                            <div class="col tag-div">
+                                                <mat-chip-list>
+                                                    <mat-chip
+                                                    *ngFor="let tag of blog.tags">{{tag}}
+                                                    </mat-chip>
+                                                </mat-chip-list> 
+                                            </div>
+                                           
+                                          </mat-card-actions>
+                                        <!-- <div style="display: flex;"> -->
+                                      
+                                           
+                                        <!-- </div> -->
+                                    </mat-card>
+                                </div>
+                        
+                                <!-- <mat-paginator 
+                                [length]="(dataSource).totalDocs"
+                                [pageSize]="(dataSource).limit"
+                                [pageSizeOptions]="[5, 10, 50, 100]"
+                                (page)="pageEvent = $event; onPaginateChange($event)"
+                                showFirstLastButtons>
+                            
+                                </mat-paginator> -->
+                        </div>
+                        
+                        
+    
+            </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+</div>

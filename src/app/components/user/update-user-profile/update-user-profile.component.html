@@ -1,0 +1,50 @@
+<form [formGroup]="form" *ngIf="form" (ngSubmit)="update()">
+    <div class="container">
+        <h1 class="text-center" style="margin-top: 2%;">Настройки профиля</h1>
+        <hr/>
+        <div class="row">
+            <div class="col-4">
+                <mat-card class="user-image-card">
+                        <img *ngIf="form.get('profileImage').value" src="http://localhost:3000/api/user/profile-image/{{form.get('profileImage').value}}" (click)="showFullImage(form.get('profileImage').value)" class="avatar-image">
+                        <mat-progress-bar *ngIf="file.progress" [value]="file.progress" style="margin-top: 3%;"></mat-progress-bar>
+                <mat-card-actions>
+
+                        <button mat-button type="button" (click)="updateImage()" class="update-button">
+                            <mat-icon style="color: rgb(25, 199, 25);">cloud_upload</mat-icon> Обновить фотографию
+                        </button>
+                    </mat-card-actions>
+                     
+                </mat-card>
+                <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display:none;">
+            </div>
+            <div class="col">
+                <mat-card class="user-info">
+                    <div class="container">
+                        <div class="row" style="margin-top: 1%;">
+                            <div class="col" >
+                                <mat-form-field>
+                                    <input matInput placeholder="Ваше имя" formControlName="name">
+                                </mat-form-field>
+                            </div>
+                            <div class="col" >
+                                <mat-form-field>
+                                    <input matInput placeholder="Никнейм" formControlName="nickname">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                        <mat-form-field appearance="outline">
+                            <mat-label class="headers-text">Описание</mat-label>
+                            <textarea class="post-textarea" matInput  placeholder="Описание" formControlName="userDescription">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+        
+                    <button mat-flat-button  class="update-info-button" [disabled]="!form.valid" type="submit">Обновить информацию</button>
+                </mat-card>
+            </div>
+
+        </div>
+
+    </div>
+</form>

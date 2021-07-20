@@ -1,0 +1,79 @@
+<div class="main-div" style="margin: 0;">
+    <div *ngIf="(user$ | async) as user" class="row" style="padding-left: 2%; padding-right: 2%; margin: 0;">
+        <div class="col">
+            <mat-card class="avatar-image">
+                <img *ngIf="user.profileImage; else placeholderImage"
+                    src="http://localhost:3000/api/user/profile-image/{{user.profileImage}}"
+                    (click)="showFullImage(user.profileImage)" class="user-image">
+            </mat-card>
+            <ng-template #placeholderImage>
+                <img src="../../../assets/placeholders/placeholder-blog-entry.jpg"
+                    (click)="showFullImage(post.headerImage)" class="user-image">
+            </ng-template>
+            <div style="margin-top: 3%; text-align:center">
+                {{user.userDescription}}
+            </div>
+            <div *ngIf="user.role === 'admin'" style="margin-top: 5%;">
+                <small>Администрирование</small>
+                <button mat-raised-button class="admin-button" (click)="navigateToAdmin('admin-main')" color="primary"
+                    type="button">
+                    Перейти к разделу администратора
+                </button>
+            </div>
+            <div style="margin-top: 5%;">
+                <button mat-raised-button class="admin-button" color="primary" type="button"
+                    (click)="navigateTo('update-profile')">
+                    Настройки
+                </button>
+            </div>
+        </div>
+        <div class="col-6">
+
+            <mat-tab-group mat-stretch-tabs>
+                <!-- #docregion mat-tab-content -->
+                <mat-tab label="Ваши рецепты">
+                    <ng-template matTabContent>
+                        <app-user-blogs [blogEntries]="(blogEntries$ | async)"></app-user-blogs>
+                    </ng-template>
+                </mat-tab>
+                <!-- #enddocregion mat-tab-content -->
+                <mat-tab label="Избранное">
+                    <ng-template matTabContent>
+                        <app-user-favorites [favEntries]="(favEntries$ | async)"></app-user-favorites>
+                    </ng-template>
+                </mat-tab>
+                <!-- #enddocregion mat-tab-content -->
+                <mat-tab label="Черновики">
+                    <ng-template matTabContent>
+                        <app-user-drafts [draftEntries]="(draftEntries$ | async)"></app-user-drafts>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+
+
+        </div>
+        <div class="col">
+            <mat-card class="user-info">
+                <div>
+                    Здравствуйте,
+                    <h1>{{user.name}}</h1>
+                </div>
+            </mat-card>
+            <div>
+                <button mat-raised-button class="post-button" color="primary" type="button"
+                    (click)="navigateTo('create-blog-entry')">
+                    Написать рецепт
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #placeholderNullPosts>
+    <div class="placeholderNullPosts">
+        <h1>
+            У вас еще нет созданных рецептов
+        </h1>
+        <img src="../../../assets/placeholders/placeholder-emptyposts-girl.jpg" class="placeholderNullPosts-image">
+    </div>
+</ng-template>

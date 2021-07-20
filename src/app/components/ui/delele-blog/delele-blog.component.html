@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>Вы собираетесь удалить рецепт {{deleteBlogName}}</h1>
+<div mat-dialog-content>Вы уверенны? Отменить действие не получится.</div>
+<div mat-dialog-actions >
+  <button mat-button mat-dialog-close cdkFocusInitial>Отменить</button>
+  <!-- <button mat-button mat-dialog>Продолжить</button> -->
+  <button mat-stroked-button color="warn" [mat-dialog-close]="true" (click)="deleteBlog()">Удалить</button>
+</div>

@@ -1,0 +1,52 @@
+<h1 style="text-align: center;">All users</h1>
+
+<mat-form-field>
+    <mat-label>Filter by username</mat-label>
+    <input matInput type="text" [(ngModel)]="filterValue"
+    (input)="findByName(filterValue)" placeholder="Search by username">
+
+</mat-form-field>
+<div *ngIf="dataSource">
+    <mat-table [dataSource]="dataSource.docs">
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"(click)="navigateToProfile(row._id)"></mat-row>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row._id}}</mat-cell>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="nickname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nickname</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.nickname}}</mat-cell>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.email}}</mat-cell>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="role">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.role}}</mat-cell>
+            </ng-container>
+
+    </mat-table>
+
+    <mat-paginator [length]="dataSource.totalDocs"
+                   [pageSize]="dataSource.limit"
+                   [pageSizeOptions]="[5, 10, 50, 100]"
+                   (page)="pageEvent = $event; onPaginateChange($event)"
+                   showFirstLastButtons>
+    </mat-paginator>
+
+</div>

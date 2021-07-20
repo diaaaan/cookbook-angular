@@ -1,0 +1,128 @@
+<div class="container">
+    <div *ngIf="dataSource" > 
+        <div class="row row-cols-4">
+            <mat-card *ngFor="let blog of dataSource.docs"  class="col card" [ngClass]="blog.isRecipieAccepted? 'accepted' : 'not-accepted'">
+                <button *ngIf="!blog.isRecipieAccepted" mat-icon-button [matMenuTriggerFor]="menu" type="button" aria-label="Users menu" class="users-menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item type="button" (click)="acceptPost(blog)">
+                      <mat-icon>done</mat-icon>
+                      <span >Опубликовать рецепт</span>
+                    </button>
+                    <button mat-menu-item (click)="OpenDraftDialog(blog)">
+                      <mat-icon color="warn">remove</mat-icon>
+                      <span class="delete-button">Отклонить рецепт</span>
+                    </button>
+                    <button mat-menu-item (click)="openDeleteDialog(blog)">
+                        <mat-icon color="warn">delete</mat-icon>
+                        <span class="delete-button">Удалить рецепт</span>
+                      </button>
+                  </mat-menu>
+                <div class="row" (click)="navigateToDetails(blog._id)">
+                    <div class="col">
+                        <img class="image-img" *ngIf="blog.headerImage; else placeholderImage" src="http://localhost:3000/api/blogs/image/{{blog.headerImage}}">
+                        <ng-template #placeholderImage>
+                            <img src="../../../assets/placeholders/placeholder-blog-entry.jpg">
+                        </ng-template>
+                    </div>
+                    <div class="col">
+                            <h2>
+                                {{blog.title}}
+                            </h2>
+                            <small>Категория:</small>
+                            <p>{{blog.category.catTitle}}</p>
+                            <small>Автор: {{blog.authorId.name}}</small>
+                            <!-- <small style="margin-left: 15px;">{{blog.likes}}</small> -->
+                          
+            
+                    </div>
+                
+               
+                </div>
+                <mat-card-actions>
+                    <div style="margin-left: 4%;">
+                        Тэги:
+                    </div>
+                    <div class="col tag-div">
+                        <mat-chip-list>
+                            <mat-chip
+                            *ngFor="let tag of blog.tags">{{tag}}
+                            </mat-chip>
+                        </mat-chip-list> 
+                    </div>
+                   
+                  </mat-card-actions>
+                <!-- <div style="display: flex;"> -->
+              
+                   
+                <!-- </div> -->
+            </mat-card>
+        </div>
+
+        <mat-paginator 
+        [length]="(dataSource).totalDocs"
+        [pageSize]="(dataSource).limit"
+        [pageSizeOptions]="[5, 10, 50, 100]"
+        (page)="pageEvent = $event; onPaginateChange($event)"
+        showFirstLastButtons>
+    
+        </mat-paginator>
+    </div> 
+</div>
+
+<!-- 
+<div class="container">
+     <mat-form-field>
+        <mat-label>Введите имя пользователя</mat-label>
+        <input matInput type="text" [(ngModel)]="filterValue"
+        (input)="findByName(filterValue)" placeholder="Введите имя пользователя">
+    </mat-form-field> 
+
+    <div *ngIf="dataSource$">
+        <mat-table [dataSource]="(dataSource$ | async)">
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"(click)="navigateToProfile(row._id)"></mat-row>
+
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>title</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.title}}</mat-cell>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="createdAt">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>createdAt</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.createdAt}}</mat-cell>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>category</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.category}}</mat-cell>
+                </ng-container>
+
+                
+                <ng-container matColumnDef="isRecipieAccepted">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>isRecipieAccepted</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.isRecipieAccepted}}</mat-cell>
+                </ng-container>
+
+           
+                <ng-container matColumnDef="role">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Роль</mat-header-cell>
+                    <mat-cell [ngClass]="row.role == 'user' ? 'make-user' : 'make-admin'" *matCellDef="let row">{{row.role}}</mat-cell>
+                </ng-container>
+
+        </mat-table>
+
+        <mat-paginator [length]="dataSource.totalDocs"
+                    [pageSize]="dataSource.limit"
+                    [pageSizeOptions]="[5, 10, 50, 100]"
+                    (page)="pageEvent = $event; onPaginateChange($event)"
+                    showFirstLastButtons>
+        </mat-paginator> 
+
+    </div>
+
+</div> -->
+

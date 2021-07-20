@@ -1,0 +1,37 @@
+<mat-sidenav-container class="admin-container" autosize>
+    <mat-sidenav #sidenav mode="side" opened="true">
+        <mat-nav-list>
+            <mat-list-item (click)="isExpanded = !isExpanded">
+                <mat-icon mat-list-icon class="chevron-button sidenav-button"  [ngClass]="{'rotated': isExpanded}">chevron_right</mat-icon>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'admin-main'">
+              <mat-icon mat-list-icon>home</mat-icon>
+              <span *ngIf="isExpanded">Главная страница администратора</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'moderation'">
+                <mat-icon mat-list-icon>assignment</mat-icon>
+                <span *ngIf="isExpanded">Модерация рецептов</span>
+            </mat-list-item>
+
+            <mat-list-item [routerLink]="'users'">
+                <mat-icon mat-list-icon>supervisor_account</mat-icon>
+                <span *ngIf="isExpanded">Список пользователей</span>
+            </mat-list-item>
+
+        
+
+
+        </mat-nav-list>
+    </mat-sidenav>
+
+        <div class="content">
+            <mat-toolbar>
+                <h4>Привет, {{(currentUser$ | async).name}}!</h4>
+            </mat-toolbar>
+            <div style="background-color: #f7f7f7">
+              <router-outlet ></router-outlet>
+            </div>
+        </div>
+</mat-sidenav-container>

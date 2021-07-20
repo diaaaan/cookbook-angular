@@ -1,0 +1,5 @@
+<div class="home-component">
+    <app-all-blog-entries 
+[blogEntries]="(blogEntries$ | async)"
+(paginate)="onPaginateChange($event)"></app-all-blog-entries>
+</div>

@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+    <mat-label>Выберите ингредиент</mat-label>
+    <mat-select>
+      <mat-option>-</mat-option>
+      <mat-option  *ngFor="let ingredient of (ingredientSource$ | async)" [value]="ingredient.ingTitleRu">{{ingredient.ingTitleRu}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+

@@ -1,0 +1,64 @@
+img {
+    padding: 5px;
+    width: 250px;
+    height: 180px;
+}
+
+.card {
+    margin-top: 15px;
+    :hover {
+        cursor: pointer;
+    }
+}
+
+.users-menu {
+    position: absolute;
+    right: 0;
+}
+
+.crop-text-2 {
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.delete-button {
+    color: #eb0000;
+}
+
+.p {
+    font-size: 120%;
+}
+
+h1 {
+    font-family: 'Orelega One', cursive;
+    font-size: 260%; /* Размер шрифта в процентах */ 
+} 
+
+* {
+    font-family: 'Nunito', sans-serif;
+}
+
+.placeholderNullPosts-image {
+    width: 80%;
+    height: 80%;
+    border: 0;
+    filter: alpha(Opacity=50);
+    opacity: 0.5; 
+}
+
+.placeholderNullPosts {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-direction: center;
+    filter: alpha(Opacity=50);
+    opacity: 0.5; 
+}
+
+
+  
